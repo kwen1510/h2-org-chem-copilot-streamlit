@@ -28,7 +28,7 @@ def update_database(state, question, videos_data, notes_data):
     }
 
     # Make the POST request
-    response = requests.post(database_url, json=payload, headers=headers)
+    response = requests.post(database_url, json=payload, headers=headers, verify=False)
 
     # Check the response status code
     if response.status_code == 200:
@@ -61,11 +61,11 @@ if st.session_state.submitted:
     # Make a POST request to the Videos API
     videos_api_url = st.secrets["VIDEO_SEARCH_URL"]
     data = {"query_string": question}
-    videos_response = requests.post(videos_api_url, json=data)
+    videos_response = requests.post(videos_api_url, json=data, verify=False)
 
     # Make a POST request to the Notes API
     notes_api_url = st.secrets["NOTES_SEARCH_URL"]
-    notes_response = requests.post(notes_api_url, json=data)
+    notes_response = requests.post(notes_api_url, json=data, verify=False)
 
     videos_data = {}
     notes_data = {}
@@ -117,7 +117,7 @@ if st.session_state.submitted:
             """
 
             llm_data = {"query_string": prompt_template}
-            llm_response = requests.post(llm_api_url, json=llm_data)
+            llm_response = requests.post(llm_api_url, json=llm_data, verify=False)
 
             if llm_response.status_code == 200:
                 st.success("Here is what I think...")
