@@ -11,6 +11,7 @@ def truncate_text(text, max_words=30):
         return truncated_text
 
 # Function to update the database
+@st.cache_resource # Cache the results of this function
 def update_database(state, question, videos_data, notes_data):
     database_url = st.secrets["DATABASE_URL"]
     
